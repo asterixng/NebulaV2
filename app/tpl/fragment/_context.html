@@ -1,0 +1,15 @@
+{$context_up}
+{if condition="strpos($context,'sysman')  === 0"}
+	 {include="fragment/_menu_context_sysman"}
+	 
+{elseif condition="strpos($context,'process') === 0"}
+	 {include="fragment/_context_process"}
+
+{elseif condition="strpos($context,'task') === 0"}
+ 	 {include="fragment/_context_task"}
+
+{else}
+	{include="fragment/_context_home"}
+
+{/if}
+{$context_bottom}

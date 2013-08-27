@@ -1,0 +1,25 @@
+</div>
+</div>
+<footer class="navbar navbar-fixed-bottom" style="color:#006699; font-size:10px;padding-left:18px;">&copy; BB 2013 - Based on WS Framework</footer>
+	<script>
+		
+		$(function(){
+			
+			$('.action_ajax').click(function(){
+				
+				$('#main').html('<img src="/library/image/ajax-loader.gif" />');
+				
+				$url = $(this).attr('href');
+				
+				$.post($url,function(data){$('#main').html(data)})
+				
+				return false;
+				
+			});
+			
+		});
+	
+	</script>
+
+</body>
+</html>

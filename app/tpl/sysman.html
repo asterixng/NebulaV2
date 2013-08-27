@@ -1,0 +1,9 @@
+{include="fragment/_header"}
+	<div class="span9">
+	<h1>Amministrazione Sistema</h1>
+		{$content}
+		
+		{$view->GetWidget(array('widget'=>'Table','name'=>'test','design_by'=>'getTableFromQuery','params_design'=>array('query'=>"SELECT * FROM process")))}
+	</div>
+	<div class="span3">{include="fragment/_context"}</div>
+{include="fragment/_footer"}
