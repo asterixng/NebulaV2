@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MenuMap context="index">
-	<item label="Home" link="index.php"/>
-	<item label="Processi" link="index.php/Process"/>
-	<item label="Task Processi" link="index.php/Task"/>
-</MenuMap>
-
