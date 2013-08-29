@@ -1,5 +1,11 @@
 <?php
 
+/** 
+ * A exception class that is thow when an error in the bpm occur
+ * 
+ * @author bruben
+ *
+ */
 class BPMException extends Exception {
 	
 	function __construct($message=null,$code=null,$previous=null){
@@ -9,8 +15,6 @@ class BPMException extends Exception {
 	
 	protected function logException($message){
 
-			$query = "UPDATE ws_stealth SET exception = CONCAT(exception,' ','$message' WHERE id = " . WSProcess::getStealthExecution();
-			Connector::Execute($query);
 		
 	}
 	

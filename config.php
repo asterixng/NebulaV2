@@ -1,4 +1,14 @@
 <?php
+/**
+ * The config.php file will be deleted on the beta release
+ * Use Web_Configuration::getProperty(key); to retrive  a value of a configuration property
+ * Use Web_Configutation::setProperty(key,value) to set an property 
+ * 
+ * on this file will remain only row from //stable to the end of file
+ * 
+ * 
+ */
+
 ini_set('display_errors', '1');
 
 define('HOST','localhost');
@@ -9,10 +19,11 @@ define('USER','root');
 
 define('PWD','');
 
-define('SERVER_ERROR','dev.ngopen.com');
-define('MAIL_ERROR','error@ngopen.com');
+define('SERVER_ERROR','');
+define('MAIL_ERROR','');
 define('DEBUG',false);
 
+//stable
 require_once 'core/raintpl/rain.tpl.class.php';
 
 raintpl::$tpl_dir = "app/tpl/"; // template directory

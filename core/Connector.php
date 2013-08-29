@@ -1,7 +1,12 @@
 <?php
 
-require_once './config.php';
-
+/**
+ * Old connector 
+ * @deprecated Web_Connector
+ * 
+ * @author asterixng
+ *
+ */
 class Connector {
 	
 	public static $LAST_ID;

@@ -2,10 +2,10 @@
 
 class WSProcessStatus {
 	
-	public static $ACTIVE = 1;
-	public static $RUNNING = 2;
-	public static $PROCESSED = 3;
-	public static $TERMINATED = 4;
-	public static $NOSTATUS = 0;
+	const ACTIVE = 1;
+	const RUNNING = 2;
+	const PROCESSED = 3;
+	const TERMINATED = 4;
+	const NOSTATUS = 0;
 	
 }

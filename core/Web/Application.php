@@ -1,5 +1,4 @@
 <?php
-use Zend\View\View;
 
 /**
  * Classe principale del framework web per la gestione del routing e della classe TemplateEngine

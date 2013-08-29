@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Entity Class
+ * 
+ * any entity class must inherit this class
+ * 
+ * @author asterixng
+ *
+ */
 class EntityModel {
 	
 	protected $_entity;

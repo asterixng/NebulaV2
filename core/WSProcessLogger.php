@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Manage the process execution log
+ * 
+ * @todo must be reimplemnted
+ * 
+ * @author asterixng
+ *
+ */
 class WSProcessLogger {
 	
 	
@@ -7,9 +14,6 @@ class WSProcessLogger {
 	
 	public static function registerMemoryConsuption($idProcExecution){
 		
-		$memory = memory_get_usage();
-		
-		WSProcessLogger::$_memconsuption[] = array('idproc'=>$idProcExecution,'mem' => $memory,'time'=>time());	
 		
 	}
 	
@@ -17,9 +21,7 @@ class WSProcessLogger {
 		
 		foreach(WSProcessLogger::$_memconsuption as $rescons){
 			
-			$query = "INSERT INTO ws_resource_consumption VALUES(NULL,".$rescons['time'].",".$rescons['idproc'].",".$rescons['mem'].")";
 			
-			Connector::Execute($query);
 		}
 		
 		WSProcessLogger::$_memconsuption = array();

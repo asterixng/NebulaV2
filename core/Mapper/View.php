@@ -2,7 +2,7 @@
 
 /**
  * 
- * Mappa le viste sul Context corrente
+ * Map the view to the current context
  * 
  * @author Bentenuto Bruno
  *
@@ -10,10 +10,14 @@
 
 class Mapper_View extends Mapper_Map {
 	
+	/**
+	 * Context - template Map
+	 * @var Array
+	 */
 	protected $_map = array(
 
-		'login:auth' => 'login',  // Mappa il template login sul context login:auth ovvero chiama Cotroller_Login e l'azione Auth su di esso
-			
+		'login:auth' => 'login',  
+						
 	);
 	
 }
