@@ -50,7 +50,7 @@ class Web_ApplicationMapper {
 	public function getMappedController($request){
 	
 		$mapped ="";
-		//print_r(Web_ApplicationMapper::getInstanceMapper());
+		
 		if(array_key_exists($request, Web_ApplicationMapper::getInstanceMapper()->_map_request)){
 			$mapped = Web_ApplicationMapper::getInstanceMapper()->_map_request[$request];
 		} else {
@@ -70,20 +70,20 @@ class Web_ApplicationMapper {
 	public function getMappedAction($controller,$action){
 	
 		$mapped ="";
-		//print($controller.':'.$action);
+		
 		if(array_key_exists($controller, Web_ApplicationMapper::getInstanceMapper()->_map_action)){
 			
 			
 			if(array_key_exists($action, Web_ApplicationMapper::getInstanceMapper()->_map_action[$controller])){
 				$mapped = Web_ApplicationMapper::getInstanceMapper()->_map_action[$controller][$action];
-				//var_dump(Web_ApplicationMapper::getInstanceMapper()->_map_action);
+		
 			} else {
-				//print('no action');
+		
 				$mapped = 'Action' . ucfirst($action);
 			}
 			 
 		} else {
-			//print('no controller');
+		
 				$mapped = 'Action' . ucfirst($action);
 		}
 		return $mapped;
@@ -95,28 +95,14 @@ class Web_ApplicationMapper {
 	 */
 	private function initMapper(){
 		try{
-			$xml_map_file = Web_Application::$APP_PATH .'/mapping/application/Application.xml';
-		
-			$xml_object = simplexml_load_file($xml_map_file);
-			
-			$reflection = new ReflectionObject($xml_object);
-
+			$mapper_controller = new Mapper_Controller();
+			Web_ApplicationMapper::getInstanceMapper()->_map_request = $mapper_controller->getMap();
 /* mappatura delle viste */
 
 			/*** NEW CODE patch 24/08/2013 ***/
 			$mapper = new Mapper_View();
 			Web_ApplicationMapper::getInstanceMapper()->_map_views = $mapper->getMap();
 				
-			
-/* mappatura delle request*/			
-			if($reflection->hasProperty('RequestMaps')){
-		
-				foreach($xml_object->RequestMaps->Request  as $view_map){
-					$attribs = $view_map->attributes();
-					Web_ApplicationMapper::getInstanceMapper()->_map_request[(string)$attribs['name']] = (string)$attribs['controller'];;
-				}
-					
-			}
 
 /* mappatura delle action */
 			

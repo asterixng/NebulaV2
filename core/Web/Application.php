@@ -196,7 +196,7 @@ class Web_Application {
 			
 		} else {
 			/** you must elaborate other controller & view **/
-			//print($_SERVER['PATH_INFO']);
+			
 			$request = Web_Application::elaborate_request();
 			
 	/** routing the request **/
@@ -238,9 +238,8 @@ class Web_Application {
 			//var_dump($page);
 			header('location:'.str_ireplace('index.php','', $_SERVER['SCRIPT_NAME']).'index.php/'.$page);
 		}
-		
-		
-		
 	}
 	
+
+
 }

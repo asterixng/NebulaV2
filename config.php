@@ -8,7 +8,7 @@
  * 
  * 
  */
-
+date_default_timezone_set('Europe/London');
 ini_set('display_errors', '1');
 
 define('HOST','localhost');

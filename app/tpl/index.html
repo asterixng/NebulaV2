@@ -1,33 +1,6 @@
 {include="fragment/_header"}
 	<div class="span9">
 		{$content}
-		<div class="row">
-			<div class="span3"  style="text-align:center;" >
-			
-				{function="WebUI_Gauge::Design(Plugin_Resource::getErrorDatabase(),'dial');"}	
-				<h4>Errori DB/Task Eseguiti</h4>
-			</div>
-			<div class="span3" style="text-align:center;" >
-			
-				{function="WebUI_Gauge::Design(Plugin_Resource::getTaskAborted(),'dial');"}
-				<h4>Task in Errore/Task Eseguiti</h4>
-			</div>
-			<div class="span3" style="text-align:center;">
-		
-				{function="WebUI_Gauge::Design(Plugin_Resource::getProcessTerminated(),'dial');"}
-					<h4>Processi Eseguiti Correttamente</h4>
-			</div>		
-		</div>
-		<h3 class="span8 alert alert-info last_action">Ultime Azioni Eseguite <i class="icon-chevron-down"></i></h3>
-		<div class="logs span8">
-			
-			<h4>Ultimi 5 processi Eseguiti</h4>
-			{$view->GetWidget(array('widget'=>'Table','name'=>'test','design_by'=>'getTableFromQuery','params_design'=>array('query'=>"SELECT process.name, process.messageStart, execp.timestart, execp.timestop FROM `process_execution`execp INNER JOIN process ON process.idprocess = execp.idproc ORDER BY idprocexec DESC LIMIT 5")))}
-	
-			<h4>Ultimi 5 Messaggi Elaborati</h4>
-			{$view->GetWidget(array('widget'=>'Table','name'=>'test','design_by'=>'getTableFromQuery','params_design'=>array('query'=>"SELECT * FROM ws_stealth ORDER BY id DESC LIMIT 5")))}
-
-		</div>
 	</div>
 	<div class="span3">{include="fragment/_context"}</div>
 	

@@ -14,12 +14,10 @@
 <body>
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="#"> {function="Web_Application::loadImageResource('database-process-icon','png')"} Web Process Manager</a>
+    <a class="brand" href="#"> {function="Web_Application::loadImageResource('database-process-icon','png')"} Nebula</a>
     <ul class="nav">
       <li class="{function="Web_View::LinkInContext('home')"}"><a href="{function="Web_Application::createLink('index.php')"}">Home</a></li>
-      <li class="{function="Web_View::LinkInContext('process')"}">{function="Web_Application::ComposeLink(array('controller'=>'process','label'=>'Process Manager'))"}</li>
-      <li class="{function="Web_View::LinkInContext('task')"}">{function="Web_Application::ComposeLink(array('controller'=>'task','label'=>'Task Manager'))"}</li>
-      <li class="{function="Web_View::LinkInContext('sysman')"}">{function="Web_Application::ComposeLink(array('controller'=>'sysman','label'=>'SysMAN'))"}</li>
+     
     </ul>
     <ul class="nav pull-right">
                       <li><a href="#">{$context}</a></li>
