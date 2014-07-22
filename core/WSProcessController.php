@@ -1,13 +1,5 @@
 <?php
-/**
- * Class WSProcessController
- * 
- * manage the running process
- * 
- * @todo must be reimplemented
- * @author bruben
- *
- */
+
 class WSProcessController {
 	
 	private $_idprocexec = 0;
@@ -19,7 +11,15 @@ class WSProcessController {
 		
 		$this->ProcessStart($this->_idproc);
 		
-		// call a task $this->callProcessTask($task['id'],$task['class'], $task['method']);
+		$processTask = Connector::Query("SELECT * FROM process_activity WHERE idprocess = $id ORDER BY callorder");
+		
+		foreach($processTask as $task){
+			try{
+			$this->callProcessTask($task['id'],$task['class'], $task['method']);
+			}catch(Exception $ex){
+				print($ex->getMessage());
+			}
+		}
 		
 		$this->ProcessEnd();
 		
@@ -45,12 +45,14 @@ class WSProcessController {
 				
 				$reflect_method->invokeArgs($reflect_task->newInstance(array()), array());
 				
+				Connector::Execute("INSERT INTO ws_log VALUES(NULL,".WSProcess::getProcessExecutionID().",now(),'Call Task $method on $class')");
 			} catch(Exception $ex){
-				throw new BPMException('Error on lunching process');
+				Connector::Execute("INSERT INTO ws_log VALUES(NULL,".WSProcess::getProcessExecutionID().",now(),'".$ex->getMessage()."')");
+				Connector::Execute("UPDATE activity_execution SET message = concat(message,' ', '".$ex->getMessage()."') WHERE id = " . WSProcess::getActualProcessTaskExecution());
 			}
 			
 		} else {
-			throw new BPMException('Task on container don\'t exist'');
+			Connector::Execute("INSERT INTO ws_log VALUES(NULL,".WSProcess::getProcessExecutionID().",now(),'Task $class::$method Not exist')");
 		}
 		$this->ProcessTaskEnd($idtask,$id_activity);
 	}
@@ -62,7 +64,16 @@ class WSProcessController {
 	 */
 	private function ProcessTaskStart($idproc){
 		
+		Connector::Execute("INSERT INTO activity_execution VALUES(NULL,$idproc,now(),null,'Active','')");
+		WSProcess::setActualTaskID(Connector::$LAST_ID);
+		Connector::Execute("INSERT INTO ws_log VALUES(NULL,".$this->_idprocexec.",now(),'Start Task Process ID:" . $idproc ." TaskIDExec:" . Connector::$LAST_ID."')");
 		
+		if(DEBUG){
+			print('<br>Start Task Process ID:' . $idproc .' TaskIDExec:' . Connector::$LAST_ID);
+		}
+		
+		WSProcess::ChangeTaskStatus(WSProcessStatus::$RUNNING);				
+		return WSProcess::getActualProcessTaskExecution();
 	}
 	
 	
@@ -73,7 +84,14 @@ class WSProcessController {
 	 * @param integer $idtaskexec
 	 */
 	private function ProcessTaskEnd($idtask,$idtaskexec){
+		Connector::Execute("INSERT INTO ws_log VALUES(NULL,".WSProcess::getProcessExecutionID().",now(),'End Task Process ID:" . $idtask." TaskIDExec:" . WSProcess::getActualProcessTaskExecution()."')");
+			
+		if(DEBUG){
+			print('<br>End Task Process ID:' . $idtask . ' TaskID: ' .$idtaskexec);
+		}
 		
+		Connector::Execute("UPDATE activity_execution SET end=now() WHERE id = " . WSProcess::getActualProcessTaskExecution());
+		WSProcess::ChangeTaskStatus(WSProcessStatus::$PROCESSED);
 	}
 	
 	/**
@@ -83,6 +101,15 @@ class WSProcessController {
 	 */
 	private function ProcessStart($idproc){
 		
+		Connector::Execute("INSERT INTO process_execution VALUES(NULL,$idproc,now(),null,null,'Active')");
+		$this->_idprocexec = Connector::$LAST_ID;
+		WSProcess::InitProcessExecution(Connector::$LAST_ID);
+		if(DEBUG){
+			print('<br>Start Process ID:' . $idproc .'ExecID:'. $this->_idprocexec);
+				
+		}
+		Connector::Execute("INSERT INTO ws_log VALUES(NULL,".$this->_idprocexec.",now(),'Start Process ID:" . $idproc ." Process Execution ID:" . $this->_idprocexec."')");	
+		WSProcess::ChangeProcessStatus(WSProcessStatus::$RUNNING);
 	}
 	
 	/**
@@ -91,7 +118,13 @@ class WSProcessController {
 	 * @param string $idproc
 	 */
 	private function ProcessEnd($idproc=null){
-		
+		if(DEBUG){
+			print('<br>End Process ID:' . $this->_idprocexec);
+				
+		}
+		Connector::Execute("UPDATE process_execution SET timestop=now() WHERE idprocexec =".WSProcess::getProcessExecutionID());
+		Connector::Execute("INSERT INTO ws_log VALUES(NULL,".WSProcess::getProcessExecutionID().",now(),'End Process ID:" . $idproc ." Process Execution ID:" . $this->_idprocexec."')");
+		WSProcess::ChangeProcessStatus(WSProcessStatus::$PROCESSED);
 	}
 
 	

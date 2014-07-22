@@ -156,7 +156,7 @@ class Web_View {
 	 */
 	public function getPageFragmentContent($fragment){
 		
-		return Web_Application::getTemplateEngineInstance()->draw('fragment/'.$fragment,true);
+		return Web_Application::getTemplateEngineInstance()->draw(''.$fragment,true);
 		
 	}
 	

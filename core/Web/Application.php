@@ -1,4 +1,5 @@
 <?php
+use Zend\View\View;
 
 /**
  * Classe principale del framework web per la gestione del routing e della classe TemplateEngine
@@ -12,6 +13,8 @@ class Web_Application {
 	
 	public  static $APP_PATH = 'app';
 	
+        public static $_theme = "bootstrap";
+        
 	private static $_tengine= null;
 	
 	public static $_page_next_login = null;
@@ -21,8 +24,9 @@ class Web_Application {
 	 * Metodo principale che inizializza e manda in running l'application
 	 */
 	
-	public static function Run(){
-		Web_Application::Router();
+	public static function Run($theme = "bootstrap"){
+            Web_Application::$_theme = $theme;
+            Web_Application::Router();
 		
 	}
 	
@@ -193,10 +197,10 @@ class Web_Application {
 				*/
 				
 				$view->DisplayMappedActionView('index');
-			
+                                $view->setVariable("theme", Web_Application::$_theme);
 		} else {
 			/** you must elaborate other controller & view **/
-			
+			//print($_SERVER['PATH_INFO']);
 			$request = Web_Application::elaborate_request();
 			
 	/** routing the request **/
@@ -206,7 +210,7 @@ class Web_Application {
 						
 			/** Create an instance of view **/
 			$view = new Web_View();
-			
+			$view->setVariable("theme", Web_Application::$_theme);
 			/** Assegna l'istance of view al controller **/
 			$controller->setViewer($view);
 			
@@ -238,8 +242,9 @@ class Web_Application {
 			//var_dump($page);
 			header('location:'.str_ireplace('index.php','', $_SERVER['SCRIPT_NAME']).'index.php/'.$page);
 		}
+		
+		
+		
 	}
 	
-
-
 }

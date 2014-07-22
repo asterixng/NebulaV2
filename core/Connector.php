@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Old connector 
- * @deprecated Web_Connector
- * 
- * @author asterixng
- *
- */
+//require_once './config.php';
+require_once getcwd().'/config.php';
+
 class Connector {
 	
 	public static $LAST_ID;
@@ -38,8 +34,9 @@ class Connector {
 			
 			Connector::$LAST_ERROR_MESSAGE = mysql_error();
 			Connector::$LAST_ERROR_NUM = mysql_errno();
-			Connector::logQueryError($query, mysql_error(),mysql_errno());
 			mysql_close($connection);
+			Connector::logQueryError($query, Connector::$LAST_ERROR_MESSAGE,Connector::$LAST_ERROR_NUM);
+			
 		}
 		
 		return $execution;
@@ -68,12 +65,13 @@ class Connector {
 			mysql_close($connection);
 			
 		} else {
-
+			
 			Connector::$LAST_ERROR_MESSAGE = mysql_error();
 			Connector::$LAST_ERROR_NUM = mysql_errno();
-			Connector::logQueryError($query, mysql_error(),mysql_errno());
-			mysql_free_result($result);
 			mysql_close($connection);
+			Connector::logQueryError($query, Connector::$LAST_ERROR_MESSAGE,Connector::$LAST_ERROR_NUM);
+			//mysql_free_result($result);
+			
 			
 		}
 
@@ -84,12 +82,26 @@ class Connector {
 		
 		$query = mysql_escape_string($query);
 		$message = mysql_escape_string($message);
+		$my = mysql_connect(HOST,USER,PWD);
+		mysql_select_db(DBNAME);
+		mysql_query("INSERT INTO ws_connector_log VALUES(NULL,'$query','$message','$code')",$my);
+		mysql_close($my);
 		
-		//Connector::Execute("INSERT INTO ws_connector_log VALUES(NULL,'$query','$message','$code')");
 		
-		mail(MAIL_ERROR, 'installation test', $message . ' Exedcuted Query ['.$query.']');
+		//mail(MAIL_ERROR, 'installation test', $message . ' Exedcuted Query ['.$query.']');
 		
 	}
+	
+	public static function logQuery($query,$message="",$code=""){
+		
+		$query = mysql_escape_string($query);
+		$message = mysql_escape_string($message);
+		
+		Connector::Execute("INSERT INTO ws_connector_log VALUES(NULL,'$query','$message','$code')");
+		
+		
+	}
+	
 	
 	/**
 	 * Escape String

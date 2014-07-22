@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Entity Class
- * 
- * any entity class must inherit this class
- * 
- * @author asterixng
- *
- */
 class EntityModel {
 	
 	protected $_entity;
@@ -95,6 +87,8 @@ class EntityModel {
 				if(is_object($values[$field])){
 					//$this->setProperty($field,serialize($values[$field]));
 					$prop_reflected->setValue($this, serialize($values[$field]));
+					//$val = print_r($values[$field],true);
+					//$prop_reflected->setValue($this, $val);
 				} else {
 					$prop_reflected->setValue($this, $values[$field]);
 					//$this->setProperty($field,$values[$field]);

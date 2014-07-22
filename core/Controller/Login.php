@@ -9,6 +9,7 @@ class Controller_Login extends Web_Controller{
 			$user = new Web_User();
 			$pre_resource = $_POST['resource'];
 			$isAuth = $user->authenticate_user($_POST['username'], $_POST['password']);
+			
 			if($isAuth){
 				Web_Application::redirect($pre_resource);
 			} else {
@@ -24,7 +25,7 @@ class Controller_Login extends Web_Controller{
 		if(isset($_POST['username'])){
 			$this->ActionLogin();
 		} else {
-			
+			print('home login');
 		}
 		
 		
@@ -35,16 +36,6 @@ class Controller_Login extends Web_Controller{
 		Web_Authenticate::EndUserSession();
 		$view = $this->getViewer()->disableOutput();
 		Web_Application::redirect('');
-		
-	}
-	
-	public function ActionLoginAjax(){
-		
-		
-		
-	}
-	
-	public function ActionLogoutAjax(){
 		
 	}
 }

@@ -10,10 +10,9 @@ class Web_Authenticate {
 		$password = $user->_pwd;
 		
 		$user->_pwd = "";
-		$auth_query = "SELECT * from user_role WHERE username='$user_name' AND `password` = MD5('$password')";
+		$auth_query = "SELECT * from user WHERE username='$user_name' AND `password` = MD5('$password')";
 		$result = Connector::Query($auth_query);
-		//print($auth_query);
-		//print_r($result);
+		
 		if(count($result) == 1){
 			$user->_email = $result[0]['email'];
 			$user->_created_data = $result[0]['created_data'];

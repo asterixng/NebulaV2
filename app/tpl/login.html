@@ -1,25 +1,52 @@
-{include="fragment/_header_login"}
+{include="fragment/_header"}
 <div class="container">
-<div class="row" >
-	<div class="span6  form-signin" style="background:#eeeeee;">
-		{include="fragment/_login_message"}
+<div class="row" style="margin-top:150px;">
+	<div class="col-md-4">
+    	<div class="jumbotron">
+			<i class="fa fa-soundcloud fa-5x"></i>
+		  	<p>Gestione Processi Cloud</p>
+		  	<p></p>
+		</div>  	
+      	
+      	
 	</div>
-	<div class="span6">
-      <form class="form-signin" action="" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        {if condition="$message != ''"}
-        	<div class="alert alert-warning">{$message}</div>
-        {/if}
-        <input type="hidden" name="resource" value="{function="Web_Application::$_page_next_login"}" />
-        <input name="username" type="text" class="input-block-level" placeholder="Email address">
-        <input name="password" type="password" class="input-block-level" placeholder="Password">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-      </form>
+	<div class="col-md-4">
+		<form class="form-horizontal" action="" method="post">
+	  		<input type="hidden" name="resource" value="{function="Web_Application::$_page_next_login"}" />
+	  		<fieldset>
+	    		<legend>Login EbooksCLOUD Admin Panel</legend>
+	    			<div class="form-group">
+				      	<label for="inputEmail" class="col-lg-2 control-label">Username</label>
+				      	<div class="col-lg-10">
+				        	<input name="username" class="form-control" id="inputEmail" placeholder="username" type="text">
+				      	</div>
+				    </div>
+				    <div class="form-group">
+				      	<label for="inputPwd" class="col-lg-2 control-label">Password</label>
+				      	<div class="col-lg-10">
+				        	<input name="password" class="form-control" id="inputPwd" type="password">
+				        	
+                        	<label>
+                          		<input type="checkbox" style="color:black"> Remember Me
+                        	</label>
+                      
+				      	</div>
+				    </div>
+				  	<div class="col-lg-10 col-lg-offset-2">
+                    	<button type="submit" class="btn btn-primary">Submit</button>
+                   	</div>
+                    {if condition="$message != ''"}
+			        	<div class="alert alert-warning">{$message}</div>
+			        {/if}
+	    		</fieldset>
+	    </form>
+	</div>
+	<div class="col-md-4">
+	
+	</div>
+	
 </div>
-</div>
-    </div> <!-- /container -->
+    
+</div> <!-- /container -->
 
 {include="fragment/_footer"}
