@@ -1,20 +1,9 @@
 <script>
 $(function(){
-	
-	$('.ui-ajax').click(function(){
-		
-		var link = 'index.php/' + $(this).data('link');
-		$('#panel').html('<div class="panel panel-default"><div class="panel-body">Loading data ... ' + link +' <img src="app/library/image/loader.gif#" /></div></div>');
-		$.post(link,{sessid:'{$sessid}'},function(data){
-			$('#panel').html(data);	
-		});
-		
-	});
-	
-	$('.form-ajax').submit(function(evt){
-		console.log('cliccato form');
-	});
-
+	$('[data-toggle="tooltip"]').css("{'cursor':'help'}");
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        
 });
 
 

@@ -24,10 +24,10 @@ class Web_Application {
 	 * Metodo principale che inizializza e manda in running l'application
 	 */
 	
-	public static function Run($theme = "bootstrap"){
+	public static function Run($theme = "bootstrap",$options=array()){
             Web_Application::$_theme = $theme;
-            Web_Application::Router();
-		
+            Web_Application::Router($options);
+            
 	}
 	
 	/**
@@ -170,12 +170,15 @@ class Web_Application {
 	 * nel caso in cui sia presente il PATH_INFO chiama elaborate_request() ed inizializza i vari componenti necessari
 	 * 
 	 */
-	private static function Router(){
+	private static function Router($options){
 		
 		session_start();
 		
 		Web_Application::getTemplateEngineInstance()->assign("content","&nbsp;");
 		
+                if(!empty($options)){
+                    Web_Application::getTemplateEngineInstance()->assign($options);
+                }
 		if(empty($_SERVER['PATH_INFO'])){
 			/** you are on home request **/
 			
